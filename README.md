@@ -5,7 +5,7 @@ This is a modification of the file_context_store module from [this SmartThings r
 
 The exisitng file_context_store module from the Smartthings repository provides a simple local-file storage solution for SmartApp context stores where a more elaborate database storage solution isn't needed.  It was implemented as a simple text file that contains the json string of the SmartApp context.  The downside of this implementation is that any sensitive data that is part of the SmartApp configuration is stored 'in the clear'.  For example, if the SmartApp configuration includes asking the user for a password, that clear text password value becomes part of the context configuration data and would be store locally in the fully-visable json file.
 
-To overcome this security concern, this modification of the file_context_store encrypts the context json before it is written to file, and decypts the data when read from the file.
+To overcome this security concern, this modification of the file_context_store encrypts the context json before it is written to file, and decrypts the data when read from the file.
 
 The use of the methods and their parameters is no different from the standard file_context_store module with one exception:
 When instantiating the context store, a **secret key** must be passed as the first parameter. An optional directory name can be provided as the second parameter.  
