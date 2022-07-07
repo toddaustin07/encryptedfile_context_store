@@ -12,6 +12,9 @@ When instantiating the context store, a **secret key** must be passed as the fir
 
 File names will have the '.data' extension rather than '.json'.
 
+## Caveats
+Decryption of the context store is only possible during the current execution of the nodeJS application.  If the app is stopped and restarted, the encrypted file cannot be decrypted, since the derived salt is lost.
+
 ## Secret Key
 A secret key paramater must be provided when the context store is instantiated:
 ```
@@ -19,11 +22,10 @@ var store = new context_store('some_secret_key');
 ```
 - They key is used to to uniquely encrypt the context json
 - It must be a string value of any length
-- It is up to the developer to determine what key to use and to ensure that it is persistantly available across invocations of the nodeJS SmartApp.
+- It is up to the developer to determine what key to use
 - The sensitivity level of the context data will determine how the secret key should be created and managed:
   - The simplest (but less secure) approach would be to use the .installedAppId value from the SmartApp context as the secret key
   - A more secure approach would be to require console input of the key at invocation of the nodeJS SmartApp.
-  - Because the key must be available across invocations of the nodeJS SmartApp, it may be tempting to save it in persistant storage, however this wouldn't be secure; the key itself if stored, would need to be encrypted, which would require another key....and on and on!
   
 ## How Secure?
 The data is encrypted with the aes-192-cbc algorithm and uses a 24-byte salt derived from the provided secret key.  So the data file itself is fairly secure from malicious network attacks.  How the secret key itself is generated and managed is more likely to be the weak link.
