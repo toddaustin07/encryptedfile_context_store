@@ -54,4 +54,4 @@ rl._writeToOutput = function _writeToOutput(stringToWrite) {
 ```
   
 ## How Secure?
-The data is encrypted with the aes-192-cbc algorithm and uses a 24-byte salt derived from the provided secret key, so the data file itself is fairly secure from malicious network attacks.  How the secret key itself is generated and managed is more likely to be the weak link.
+The data is encrypted with the aes-192-cbc algorithm and uses a 24-byte salt derived from the provided secret key, so the data file itself is fairly secure from malicious network attacks.  How the secret key is generated and managed is more likely to be the weak link.
