@@ -25,7 +25,33 @@ var store = new context_store('some_secret_key');
 - It is up to the developer to determine what key to use
 - The sensitivity level of the context data will determine how the secret key should be created and managed:
   - The simplest (but less secure) approach would be to use the .installedAppId value from the SmartApp context as the secret key
-  - A more secure approach would be to require console input of the key at invocation of the nodeJS SmartApp.
+  - A more secure approach would be to require console input of the key at invocation of the nodeJS SmartApp (see below).
+  
+### Console Input of Secret Key
+Here is example js code for secure secret key input from console:
+```
+var readline = require('readline');
+
+var rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+rl.stdoutMuted = true;
+
+rl.question('Key: ', function(secretkey) {
+  
+  < DO STUFF >
+  
+});
+
+rl._writeToOutput = function _writeToOutput(stringToWrite) {
+  if (rl.stdoutMuted)
+    rl.output.write("*");
+  else
+    rl.output.write(stringToWrite);
+};
+```
   
 ## How Secure?
-The data is encrypted with the aes-192-cbc algorithm and uses a 24-byte salt derived from the provided secret key.  So the data file itself is fairly secure from malicious network attacks.  How the secret key itself is generated and managed is more likely to be the weak link.
+The data is encrypted with the aes-192-cbc algorithm and uses a 24-byte salt derived from the provided secret key, So the data file itself is fairly secure from malicious network attacks.  How the secret key itself is generated and managed is more likely to be the weak link.
